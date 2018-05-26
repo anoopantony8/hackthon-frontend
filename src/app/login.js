@@ -49,30 +49,30 @@ export class Login extends Component {
     console.log(apiBaseUrl, payload);
     fetch(apiBaseUrl, {
       method: 'POST',
-      mode: 'no-cors',
-      crossDomain: true,
+      // mode: 'no-cors',
+      // crossDomain: true,
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: searchParams
-    }).then(function (response) {
-      console.log(response.json());
-      if (response.data.code === 200) {
-        console.log('Login successfull');
-        // var uploadScreen = [];
-        // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-        // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-      } else if (response.data.code === 204) {
-        // console.log('Username password do not match');
-        this.setState({errorMessage: 'username password do not match'});
-      } else {
-        console.log('Username does not exists');
-        this.setState({errorMessage: 'Username does not exist'});
-      }
-      console.log(this.state.errorMessage);
-    });
+    }).then(resp => resp.json())
+      .then(function (data) {
+        console.log(data);
+        if (data) {
+          console.log('Login successfull');
+          if (data.errors) {
+            console.log(data.errors);
+            this.setState({errorMessage: 'Email does not exist or password is incorrect'});
+          }
+          if (data.user) {
+            console.log(data.user.token);
+            localStorage.setItem('token', data.user.token);
+          }
+          // var uploadScreen = [];
+          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+        }
+      });
     // axios.post({
     //   method: 'post',
     //   mode: 'no-cors',
