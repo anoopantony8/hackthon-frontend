@@ -23,14 +23,15 @@ export class Header extends Component {
   render() {
     return (
       <header style={styles.header}>
-        <p style={styles.title}>
-          <a href="https://github.com/FountainJS/generator-fountain-webapp" target="_blank" rel="noopener noreferrer">
-            Fountain Generator
-          </a>
-        </p>
-        <p style={styles.date}>
-          Generated with FountainJS v1.0.0 on Fri May 25 2018 20:29:08 GMT+0530 (IST)
-        </p>
+        <div className="container">
+          <div className="navbar-header">
+            <a href="#" className="navbar-brand logo_anaco">An<span>a</span>Co</a>
+          </div>
+          <ul className="nav navbar-nav navbar-right">
+            <li><a href="#"><span className="glyphicon glyphicon-user"/>Sign Up</a></li>
+            <li><a href="#"><span className="glyphicon glyphicon-log-in"/>Login</a></li>
+          </ul>
+        </div>
       </header>
     );
   }

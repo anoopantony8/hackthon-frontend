@@ -13,11 +13,10 @@ const styles = {
 export class Footer extends Component {
   render() {
     return (
-      <footer style={styles.footer}>
-        Build with ♥ by the&nbsp;
-        <a href="https://github.com/orgs/FountainJS/people">
-          FountainJS team
-        </a>
+      <footer className="mastfoot mt-auto  text-center" style={styles.footer}>
+        <div className="inner text-center" >
+          <p className="inner" >© 2018 - Anaco@gmail.com </p>
+        </div>
       </footer>
     );
   }
