@@ -1,4 +1,8 @@
 .idea
+.yo-rc.json
+.babelrc
+.editorconfig
+.gitattributes
 .tmp/
 coverage/
 dist/
