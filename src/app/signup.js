@@ -32,7 +32,7 @@ export class Signup extends Component {
   }
 
   handleClick() {
-    const apiBaseUrl = 'http://192.168.0.41:8080/api/users';
+    const apiBaseUrl = 'http://206.189.147.1:8080/api/users';
     // var self = this;
     const payload = {
       email: this.state.email,
@@ -51,60 +51,28 @@ export class Signup extends Component {
     console.log(apiBaseUrl, payload);
     fetch(apiBaseUrl, {
       method: 'POST',
-      mode: 'no-cors',
-      crossDomain: true,
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: searchParams
-    }).then(function (response) {
-      console.log(response.json());
-      if (response.data.code === 200) {
-        console.log('Signup successfull');
-        // var uploadScreen = [];
-        // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-        // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-      } else if (response.data.code === 204) {
-        // console.log('Username password do not match');
-        this.setState({errorMessage: 'Signup Error'});
-      } else {
-        console.log('Username does not exists');
-        this.setState({errorMessage: 'Username does not exist'});
-      }
-      console.log(this.state.errorMessage);
-    });
-    // axios.post({
-    //   method: 'post',
-    //   mode: 'no-cors',
-    //   url: apiBaseUrl,
-    //   data: searchParams,
-    //   crossDomain: true,
-    //   config: {
-    //     headers: {
-    //       'Access-Control-Allow-Origin': '*',
-    //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //     }
-    //   }
-    // }).then(function (response) {
-    //   console.log(response);
-    //   if (response.data.code === 200) {
-    //     console.log('Login successfull');
-    //     // var uploadScreen = [];
-    //     // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-    //     // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-    //   } else if (response.data.code === 204) {
-    //     // console.log('Username password do not match');
-    //     this.setState({errorMessage: 'username password do not match'});
-    //   } else {
-    //     console.log('Username does not exists');
-    //     this.setState({errorMessage: 'Username does not exist'});
-    //   }
-    // });
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
+    }).then(resp => resp.json())
+      .then(function (data) {
+        console.log(data);
+        if (data) {
+          console.log('Login successfull');
+          if (data.errors) {
+            console.log(data.errors);
+            this.setState({errorMessage: 'Email does not exist or password is incorrect'});
+          }
+          if (data.user) {
+            console.log(data.user.token);
+            localStorage.setItem('token', data.user.token);
+          }
+          // var uploadScreen = [];
+          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+        }
+      });
   }
 
   render() {
@@ -113,7 +81,6 @@ export class Signup extends Component {
         <div className="card card-container">
 
           <h2 className="login_heaing text-center"> Signup </h2>
-          <p className="login_bottm text-center">Already have a anaco account?<a href=""> login </a></p>
 
           <form className="form-signin" onSubmit={this.handleSubmit}>
             <p className="input_title"> Username </p>

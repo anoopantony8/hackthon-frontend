@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Header} from './header';
 import {Footer} from './footer';
 import {Login} from './login';
+import {Signup} from './signup';
 
 const styles = {
   container: {
@@ -28,14 +29,16 @@ export class Main extends Component {
     console.log(event.target.id);
     if (event.target.id === 'signup') {
       this.setState({login: false});
+    } else {
+      this.setState({login: true});
     }
   }
   render() {
     let page = Login;
-    if (this.state.login) {
-      page = Login;
+    if (this.state.login === true) {
+      page = <Login/>;
     } else {
-      page = '';
+      page = <Signup/>;
     }
     return (
       <div style={styles.container}>

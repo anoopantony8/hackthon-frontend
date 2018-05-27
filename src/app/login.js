@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 // import axios from 'axios';
 // import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import './login.css';
+import {Home} from './home';
 
 export class Login extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: ''
+      errorMessage: '',
+      loginPage: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,8 +38,8 @@ export class Login extends Component {
   }
 
   handleClick() {
-    const apiBaseUrl = 'http://192.168.0.41:8080/api/users/login';
-    // var self = this;
+    const apiBaseUrl = 'http://206.189.147.1:8080/api/users/login';
+    const self = this;
     const payload = {
       email: this.state.email,
       password: this.state.password
@@ -61,16 +63,17 @@ export class Login extends Component {
       },
       body: searchParams
     }).then(resp => resp.json())
-      .then(function (data) {
+      .then(data => {
         console.log(data);
         if (data) {
           console.log('Login successfull');
           if (data.errors) {
             console.log(data.errors);
-            this.setState({errorMessage: 'Email does not exist or password is incorrect'});
+            self.setState({errorMessage: 'Email does not exist or password is incorrect'});
           }
           if (data.user) {
             console.log(data.user.token);
+            self.setState({loginPage: false});
             localStorage.setItem('token', data.user.token);
           }
           // var uploadScreen = [];
@@ -111,7 +114,7 @@ export class Login extends Component {
   }
 
   render() {
-    return (
+    let page = (
       <div className="container login-form">
         <div className="card card-container">
 
@@ -154,6 +157,14 @@ export class Login extends Component {
             {this.state.errorMessage}
           </form>
         </div>
+      </div>
+    );
+    if (this.state.loginPage === false) {
+      page = <Home/>;
+    }
+    return (
+      <div>
+        {page}
       </div>
     );
   }
