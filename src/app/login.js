@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 // import axios from 'axios';
 // import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import './login.css';
-import {Home} from './home';
 
 export class Login extends Component {
   constructor(props) {
@@ -11,8 +11,7 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: '',
-      loginPage: true
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,18 +37,12 @@ export class Login extends Component {
   }
 
   handleClick() {
-    const apiBaseUrl = 'http://206.189.147.1:8080/api/users/login';
+    const apiBaseUrl = 'http://192.168.0.41:8000/api/users/login';
     const self = this;
     const payload = {
       email: this.state.email,
       password: this.state.password
     };
-    // const formData = new FormData();
-    // if (payload) {
-    //   for (const k in payload) {
-    //     formData.append(k, payload[k]);
-    //   }
-    // }
     const searchParams = Object.keys(payload).map(key => {
       return encodeURIComponent(key) + '=' + encodeURIComponent(payload[key]);
     }).join('&');
@@ -73,48 +66,15 @@ export class Login extends Component {
           }
           if (data.user) {
             console.log(data.user.token);
-            self.setState({loginPage: false});
+            browserHistory.push('/home');
             localStorage.setItem('token', data.user.token);
           }
-          // var uploadScreen = [];
-          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
         }
       });
-    // axios.post({
-    //   method: 'post',
-    //   mode: 'no-cors',
-    //   url: apiBaseUrl,
-    //   data: searchParams,
-    //   crossDomain: true,
-    //   config: {
-    //     headers: {
-    //       'Access-Control-Allow-Origin': '*',
-    //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //     }
-    //   }
-    // }).then(function (response) {
-    //   console.log(response);
-    //   if (response.data.code === 200) {
-    //     console.log('Login successfull');
-    //     // var uploadScreen = [];
-    //     // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-    //     // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-    //   } else if (response.data.code === 204) {
-    //     // console.log('Username password do not match');
-    //     this.setState({errorMessage: 'username password do not match'});
-    //   } else {
-    //     console.log('Username does not exists');
-    //     this.setState({errorMessage: 'Username does not exist'});
-    //   }
-    // });
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
   }
 
   render() {
-    let page = (
+    return (
       <div className="container login-form">
         <div className="card card-container">
 
@@ -157,14 +117,6 @@ export class Login extends Component {
             {this.state.errorMessage}
           </form>
         </div>
-      </div>
-    );
-    if (this.state.loginPage === false) {
-      page = <Home/>;
-    }
-    return (
-      <div>
-        {page}
       </div>
     );
   }

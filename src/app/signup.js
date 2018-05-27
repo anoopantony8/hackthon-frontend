@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
+import {Header} from './header';
+import {Footer} from './footer';
 // import axios from 'axios';
 // import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import './login.css';
@@ -66,6 +69,7 @@ export class Signup extends Component {
           }
           if (data.user) {
             console.log(data.user.token);
+            browserHistory.push('/home');
             localStorage.setItem('token', data.user.token);
           }
           // var uploadScreen = [];
@@ -77,47 +81,51 @@ export class Signup extends Component {
 
   render() {
     return (
-      <div className="container login-form">
-        <div className="card card-container">
+      <div>
+        <Header/>
+        <div className="container login-form">
+          <div className="card card-container">
 
-          <h2 className="login_heaing text-center"> Signup </h2>
+            <h2 className="login_heaing text-center"> Signup </h2>
 
-          <form className="form-signin" onSubmit={this.handleSubmit}>
-            <p className="input_title"> Username </p>
-            <input
-              type="text"
-              autoFocus
-              id="username"
-              value={this.state.username}
-              onChange={this.handleChange}
-              />
-            <p className="input_title"> Email </p>
-            <input
-              type="email"
-              autoFocus
-              id="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              />
-            <p className="input_title">Password</p>
-            <input
-              type="password"
-              id="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              />
-            <div>
-              &nbsp;
-            </div>
-            <button
-              className="btn btn-block btn-signin"
-              type="submit"
-              onClick={this.handleClick}
-              >
-              Create Account</button>
-            {this.state.errorMessage}
-          </form>
+            <form className="form-signin" onSubmit={this.handleSubmit}>
+              <p className="input_title"> Username </p>
+              <input
+                type="text"
+                autoFocus
+                id="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+                />
+              <p className="input_title"> Email </p>
+              <input
+                type="email"
+                autoFocus
+                id="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+                />
+              <p className="input_title">Password</p>
+              <input
+                type="password"
+                id="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+                />
+              <div>
+                &nbsp;
+              </div>
+              <button
+                className="btn btn-block btn-signin"
+                type="submit"
+                onClick={this.handleClick}
+                >
+                Create Account</button>
+              {this.state.errorMessage}
+            </form>
+          </div>
         </div>
+        <Footer/>
       </div>
     );
   }
