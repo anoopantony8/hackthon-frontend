@@ -37,7 +37,7 @@ export class Login extends Component {
   }
 
   handleClick() {
-    const apiBaseUrl = 'http://192.168.0.41:8000/api/users/login';
+    const apiBaseUrl = 'http://206.189.147.1:8080/api/users/login';
     const self = this;
     const payload = {
       email: this.state.email,
