@@ -27,10 +27,6 @@ export class Header extends Component {
           <div className="navbar-header">
             <a href="#" className="navbar-brand logo_anaco">An<span>a</span>Co</a>
           </div>
-          <ul className="nav navbar-nav navbar-right">
-            <li><a href="#"><span className="glyphicon glyphicon-user"/>Sign Up</a></li>
-            <li><a href="#"><span className="glyphicon glyphicon-log-in"/>Login</a></li>
-          </ul>
         </div>
       </header>
     );

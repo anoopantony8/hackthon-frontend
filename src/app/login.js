@@ -15,6 +15,7 @@ export class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handlePage = this.handlePage.bind(this);
   }
   // validateForm() {
   //   return this.state.email.length > 0 && this.state.password.length > 0;
@@ -28,6 +29,10 @@ export class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+  }
+
+  handlePage() {
+    console.log('------------');
   }
 
   handleClick() {
@@ -111,7 +116,7 @@ export class Login extends Component {
         <div className="card card-container">
 
           <h2 className="login_heaing text-center"> Login </h2>
-          <p className="login_bottm text-center">New to anaco?<a href=""> Sign Up </a></p>
+          <p className="login_bottm text-center">New to anaco?<a href=""onClick={this.handlePage}> Sign Up </a></p>
 
           <form className="form-signin" onSubmit={this.handleSubmit}>
             <p className="input_title"> Email </p>
